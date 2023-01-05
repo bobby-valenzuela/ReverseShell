@@ -1,9 +1,21 @@
 #!/usr/bin/python3
 
 """
+Setup:
+
+sudo apt install python3-pip
+pip3 install --pre scapy[basic]
+"""
+
+"""
 Description: Detects (possible) ARP apoofing.
+
 Technicially, it just checks for any ARP packets being received and will let us know if we're receiving an ARP request in which the IP/MAC association has been changed.
 This would (likely) be due to some of ARP poisoning.
+"""
+
+"""
+Usage: sudo python3 arpDetector.py
 """
 
 from scapy.all import sniff
