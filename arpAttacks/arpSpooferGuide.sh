@@ -62,7 +62,7 @@ then
 else
     if [[ "${pkg_mger}" == 'yum' ]]
     then
-        echo -e "\nCould not install netdiscover. Please consider using a Debian-based distro or compiling netdiscover source code from a tarball.\n" && exit 1
+        echo -e "\nCould not install netdiscover. Please consider using a Debian-based distro or compiling netdiscover source code from a tarball.\n"
     else
         sudo ${pkg_mger} install netdiscover -y &> /dev/null && echo "Netdiscover has been installed!"
     fi
