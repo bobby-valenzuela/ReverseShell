@@ -43,7 +43,7 @@ printf "Installing necessary packages..."
 sudo apt update &> /dev/null && echo "Apt cache updated!"
 sudo apt install netdiscover -y &> /dev/null && echo "Netdiscover has been installed!"
 sudo apt install dsniff -y &> /dev/null && echo "Dsniff has been installed!"
-sudo apt install net-tools -y &> /dev/null && echo "Dsniff has been installed!" # route command
+sudo apt install net-tools -y &> /dev/null && echo "net-tools has been installed!" # route command
 printf "Finished Package Installation!\n\n"
 
 
@@ -66,7 +66,7 @@ default_gateway_interface=$(ip route show | egrep "default\s*via" | awk '{ print
 
 printf "Your default gateway is: ${default_gateway} via ${default_gateway_interface}\n"
 
-print_colored 'green' "\n=== Here are the commands to run ===\n\n"
+print_colored 'green' "\n=== Here are the commands to run ===\n"
 
 # Scan for local systems with netdiscover
 print_colored 'cyan' "[TERMINAL 1] Find a victim:"
