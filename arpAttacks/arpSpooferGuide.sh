@@ -37,14 +37,54 @@ print_colored()
 }
 # => End Functions
 
+# Get main dist type
+main_dist=$(cat /etc/os-release | grep ID_LIKE | cut -d "=" -f2)
+# main_dist=${main_dist,,}
 
-# Install Pckages
+if [[ "${main_dist,,}" =~ debian|kali|ubuntu ]]
+then
+    pkg_mger='apt'
+elif [[ "${main_dist,,}" =~ rhel|rocky|fedora|centos ]]
+then
+    pkg_mger='yum'
+else
+    echo "Could not find dist - exiting." && exit 1
+fi
+
+# Install Packages
 printf "Installing necessary packages..."
-sudo apt update &> /dev/null && echo "Apt cache updated!"
-sudo apt install netdiscover -y &> /dev/null && echo "Netdiscover has been installed!"
-sudo apt install dsniff -y &> /dev/null && echo "Dsniff has been installed!"
-sudo apt install net-tools -y &> /dev/null && echo "net-tools has been installed!" # route command
-printf "Finished Package Installation!\n\n"
+sudo ${pkg_mger} update &> /dev/null && echo "${pkg_mger} cache updated!"
+
+# Netdiscover
+if which netdiscover &> /dev/null 
+then
+    echo "netdiscover is already installed."
+else
+    if [[ "${pkg_mger}" == 'yum' ]]
+    then
+        echo -e "\nCould not install netdiscover. Please consider using a Debian-based distro or compiling netdiscover source code from a tarball.\n" && exit 1
+    else
+        sudo ${pkg_mger} install netdiscover -y &> /dev/null && echo "Netdiscover has been installed!"
+    fi
+fi
+
+# Dsniff
+if which dsniff &> /dev/null
+then
+    echo "dsniff is already installed."
+else
+    sudo ${pkg_mger} install dsniff -y &> /dev/null && echo "Dsniff has been installed!"
+fi
+
+if which net-tools &> /dev/null
+then
+    echo "net-tools is already installed."
+else
+    sudo ${pkg_mger} install net-tools -y &> /dev/null && echo "net-tools has been installed!" # route command
+fi
+
+
+printf "All Packages Installed!\n\n"
 
 
 # Enable port-forwarding
