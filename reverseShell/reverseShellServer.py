@@ -38,7 +38,7 @@ while command != "exit":
     command = input("Enter a command: ")
     connectionSocket.send(command.encode())
     message = connectionSocket.recv(1024).decode()
-    print("Message received:\n{}".format(message))
+    print(message)
 
 connectionSocket.shutdown(SHUT_RDWR)
 connectionSocket.close()
