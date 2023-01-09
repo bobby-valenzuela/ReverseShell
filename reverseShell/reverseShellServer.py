@@ -35,10 +35,10 @@ print("Message received: {}".format(message))
 command = ""
 
 while command != "exit":
-    command = input("Enter a command")
+    command = input("Enter a command: ")
     connectionSocket.send(command.encode())
     message = connectionSocket.recv(1024).decode()
-    print("Message received: {}".format(message))
+    print("Message received:\n\n {}".format(message))
 
 connectionSocket.shutdown(SHUT_RDWR)
 connectionSocket.close()
