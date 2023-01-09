@@ -17,7 +17,7 @@ if len(sys.argv) < 2 :
 serverName = sys.argv[1]
 serverPort = sys.argv[2] if len(sys.argv) > 2 else 8000 # Use port 8000 by default
 
-print "SERVER: {} PORT: {}".format(serverName,serverPort)  
+print("SERVER: {} PORT: {}".format(serverName,serverPort) ) 
 
 # Create client IPv4 (AF_INET) TCPSocket (SOCK_STREAM)
 clientSocket = socket(AF_INET, SOCK_STREAM)
