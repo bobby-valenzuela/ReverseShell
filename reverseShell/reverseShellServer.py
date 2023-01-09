@@ -30,7 +30,7 @@ print("Connected to {}!".format(str(addr)))
 
 # Get/print message
 message = connectionSocket.recv(1024)
-print("Message received: {}".format(message))
+print("Message received: {}".format(str(message)))
 
 command = ""
 
@@ -38,7 +38,7 @@ while command != "exit":
     command = input("Enter a command: ")
     connectionSocket.send(command.encode())
     message = connectionSocket.recv(1024).decode()
-    print("Message received:\n\n {}".format(message))
+    print("Message received:\n{}".format(message))
 
 connectionSocket.shutdown(SHUT_RDWR)
 connectionSocket.close()

