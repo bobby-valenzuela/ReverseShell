@@ -11,7 +11,7 @@ from socket import *
 
 # Guard clause for arguments
 if len(sys.argv) < 2 :
-    print "Missing one argument.\nUsage: {} <hacker_host> <port - optional>\nExiting.".format(sys.argv[0])
+    print( "Missing one argument.\nUsage: {} <hacker_host> <port - optional>\nExiting.".format(sys.argv[0]) )
     exit()
 
 serverName = sys.argv[1]
