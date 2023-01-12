@@ -7,7 +7,7 @@ Reverse Shell script (server) as laid out in the book "Ethical Hacking". Made so
 """
 import sys
 from socket import *
-serverPort = sys.argv[2] if len(sys.argv) > 2 else 8000 # Use port 8000 by default
+serverPort = sys.argv[1] if len(sys.argv) > 1 else 8000 # Use port 8000 by default
 
 # Create client IPv4 (AF_INET) TCPSocket (SOCK_STREAM)
 # Using IPv4 TCP Socket to match client socket
