@@ -32,7 +32,7 @@ Or run as a backgroud job
 - - - `nohup bash infiniteShell.sh &> /dev/null &`
 
 
-## Indirect Client Deployment \[ALT]\
+## Indirect Client Deployment [ALT]
 - Could also exploit a file upload vulnerability and upload the file onto the victim's machine
 
 
