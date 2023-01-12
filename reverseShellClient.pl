@@ -1,5 +1,8 @@
 #!/usr/bin/perl -w
-
+=notice
+Incomplete - does not send msgs to server (yet).
+However - commands entered from server to execute on client.
+=
 use strict;
 use Socket;
 
