@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# ArpSpooferGuie
+# ArpSpooferStartup
 
 # Author : Bobby Valenzuela
 # Created : 8th January 2023
