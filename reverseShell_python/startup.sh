@@ -69,7 +69,7 @@ print_colored "green" "Payload server saved: ${PAYLOAD_SERVER}\n\n"
 
 # Get host details thus far
 CNC_HOST=$(echo ${CNC_SERVER} | sed 's/:.*//')
-CNC_PORT=$(echo ${CNC_HOST} | sed 's/^.*://')
+CNC_PORT=$(echo ${CNC_SERVER} | sed 's/^.*://')
 PAYLOAD_HOST=$(echo ${PAYLOAD_SERVER} | sed 's/:.*//')
 PAYLOAD_PORT=$(echo ${PAYLOAD_SERVER} | sed 's/^.*://')
 
