@@ -10,7 +10,12 @@
 # This scrpt also edits the client_payload.py, server_shell.py, and client_connect.sh to reflected the command line input.
 # Finally, this script tells you exactly which commands to run on CNC server and client machine to initiate a reverse shell (backdoor) attack. 
 
-# echo "Start by entering the IP of your hacking machine (CNC server)"
+# Make sure we have python3
+if ! python3 --version   
+then
+    echo "This requires python3. Exiting..." && exit 1
+fi
+
 
 print_colored()
 {
