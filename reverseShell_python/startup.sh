@@ -108,7 +108,7 @@ echo "All client/server scripts have been updated with the peoper host/port info
 print_colored "cyan" "\nEnter these commands to continue:\\n"
 # printf "\t[ON CNC SERVER] \n\t"
 print_colored "cyan" "\t[ON CNC SERVER] This listens for inconming connections from the client.  \n" "no"
-printf "\tpython3 server_phell.pl\n\n"
+printf "\tpython3 server_shell.py\n\n"
 
 print_colored "cyan" "\t[ON CLIENT] This command starts a connection to CNC server.\n" "no"
 
