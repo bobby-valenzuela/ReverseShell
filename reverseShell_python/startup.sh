@@ -93,7 +93,7 @@ sed -i -e "s/<cnc_ip>/${CNC_HOST}/g" -e "s/<cnc_port>/${CNC_PORT}/g" -e "s/<payl
 echo "All client/server scripts have been updated with the peoper host/port information provided"
 print_colored "cyan" "\nEnter these commands to continue:\\n"
 # printf "\t[ON CNC SERVER] \n\t"
-print_colored "cyan" "\t[ON CNC SERVER] This listening for inconming connections from the client.  \n" "no"
+print_colored "cyan" "\t[ON CNC SERVER] This listens for inconming connections from the client.  \n" "no"
 printf "\tpython3 server_phell.pl\n\n"
 
 print_colored "cyan" "\t[ON CLIENT] This command starts a connection to CNC server.\n" "no"
