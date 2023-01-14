@@ -11,7 +11,7 @@
 # Finally, this script tells you exactly which commands to run on CNC server and client machine to initiate a reverse shell (backdoor) attack. 
 
 # Make sure we have python3
-if ! python3 --version   
+if ! which python3 &> /dev/null
 then
     echo "This requires python3. Exiting..." && exit 1
 fi
