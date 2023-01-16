@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # Scripted to run on python3
 
+# Author : Bobby Valenzuela
+# Created : 10th January 2023
+
 """
 Description: CNC server (command and control)
 Reverse Shell script (server) as laid out in the book "Ethical Hacking". Made some adjustments of my own as well.

