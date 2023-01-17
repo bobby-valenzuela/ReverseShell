@@ -1,3 +1,6 @@
+### Description
+By running one script on the attack machine and by injecting one command into the client's terminal - a backdoor will be deployed on the client machine opening up a reverse shell.
+
 # Files in question
 
 __server_shell.py__ [CNC - Command and Control script]
