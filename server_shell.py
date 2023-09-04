@@ -22,8 +22,8 @@ serverSocket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 # Binding the port - leaving IP blank so it uses default on host machine
 serverSocket.bind(('', serverPort))
 
-# Listen for incoming connections
-serverSocket.listen(1)
+# Listen for incoming connections (up to 5 connections)
+serverSocket.listen(5)
 
 print("Awaiting connections... (enter 'exit' to disconnect)")
 
